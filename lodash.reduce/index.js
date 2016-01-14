@@ -1,5 +1,5 @@
 /**
- * lodash 4.0.0 (Custom Build) <https://lodash.com/>
+ * lodash 4.0.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
  * Copyright 2012-2016 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
@@ -40,14 +40,14 @@ var reEscapeChar = /\\(\\)?/g;
  * @param {Array} array The array to iterate over.
  * @param {Function} iteratee The function invoked per iteration.
  * @param {*} [accumulator] The initial value.
- * @param {boolean} [initFromArray] Specify using the first element of `array` as the initial value.
+ * @param {boolean} [initAccum] Specify using the first element of `array` as the initial value.
  * @returns {*} Returns the accumulated value.
  */
-function arrayReduce(array, iteratee, accumulator, initFromArray) {
+function arrayReduce(array, iteratee, accumulator, initAccum) {
   var index = -1,
       length = array.length;
 
-  if (initFromArray && length) {
+  if (initAccum && length) {
     accumulator = array[++index];
   }
   while (++index < length) {
@@ -66,11 +66,11 @@ var objectProto = global.Object.prototype;
 var objectToString = objectProto.toString;
 
 /** Built-in value references. */
-var _Symbol = global.Symbol;
+var Symbol = global.Symbol;
 
 /** Used to convert symbols to primitives and strings. */
-var symbolProto = _Symbol ? _Symbol.prototype : undefined,
-    symbolToString = _Symbol ? symbolProto.toString : undefined;
+var symbolProto = Symbol ? Symbol.prototype : undefined,
+    symbolToString = Symbol ? symbolProto.toString : undefined;
 
 /**
  * The base implementation of `_.get` without support for default values.
@@ -294,9 +294,9 @@ function stringToPath(string) {
  */
 function reduce(collection, iteratee, accumulator) {
   var func = isArray(collection) ? arrayReduce : baseReduce,
-      initFromCollection = arguments.length < 3;
+      initAccum = arguments.length < 3;
 
-  return func(collection, baseIteratee(iteratee, 4), accumulator, initFromCollection, baseEach);
+  return func(collection, baseIteratee(iteratee, 4), accumulator, initAccum, baseEach);
 }
 
 /**
@@ -431,7 +431,7 @@ function toString(value) {
     return '';
   }
   if (isSymbol(value)) {
-    return _Symbol ? symbolToString.call(value) : '';
+    return Symbol ? symbolToString.call(value) : '';
   }
   var result = (value + '');
   return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;

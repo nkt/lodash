@@ -1,5 +1,5 @@
 /**
- * lodash 4.0.0 (Custom Build) <https://lodash.com/>
+ * lodash 4.0.1 (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
  * Copyright 2012-2016 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
@@ -126,7 +126,7 @@ function createAssigner(assigner) {
     while (++index < length) {
       var source = sources[index];
       if (source) {
-        assigner(object, source, customizer);
+        assigner(object, source, index, customizer);
       }
     }
     return object;
@@ -339,7 +339,7 @@ function isObject(value) {
  * defaults({ 'a': 1 }, { 'b': 2 }, { 'a': 3 });
  * // => { 'a': 1, 'b': 2 }
  */
-var assignWith = createAssigner(function(object, source, customizer) {
+var assignWith = createAssigner(function(object, source, srcIndex, customizer) {
   copyObjectWith(source, keys(source), object, customizer);
 });
 
